@@ -87,7 +87,7 @@ def handle_labels(labels):
 
 def get_data():
     dh = DataHandler(
-        handle_pandas=False,
+        handle_pandas=True,
         normalize=True
     )
 

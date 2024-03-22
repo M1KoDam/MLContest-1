@@ -11,7 +11,7 @@ def train_ml_model(model, x_train: np.ndarray, y_train: np.ndarray):
 
 def test_ml_model(model, x_test: np.ndarray, y_test: np.ndarray) -> float:
     """Returns accuracy on test data"""
-    return roc_auc_score(y_test, model.predict_proba(x_test))
+    return roc_auc_score(y_test, model.predict_proba(x_test)[:, 1])
 
 
 def build_RFC() -> RFC:
