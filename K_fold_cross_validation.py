@@ -2,6 +2,7 @@ import numpy as np
 from data_handler import get_data
 from models.model_keras import build_keras_model, train_keras_model, test_keras_model
 from models.model_ml import build_RFC, train_ml_model, test_ml_model, build_KNC
+import pandas as pd
 
 
 def K_fold_cross_validation(train_data: np.ndarray,
@@ -31,10 +32,22 @@ def K_fold_cross_validation(train_data: np.ndarray,
 def main():
     x_train, y_train, x_test = get_data()
     print(x_train.shape)
-    # print(x_train)
     # print(K_fold_cross_validation(x_train, y_train, build_RFC(), train_ml_model, test_ml_model))
-    print(K_fold_cross_validation(x_train, y_train, build_KNC(), train_ml_model, test_ml_model))
-    # print(K_fold_cross_validation(x_train, y_train, build_keras_model(), train_keras_model, test_keras_model))
+    # print(K_fold_cross_validation(x_train, y_train, build_KNC(), train_ml_model, test_ml_model))
+
+    model_ml = build_RFC()
+    name = "RFC"
+    print(K_fold_cross_validation(x_train, y_train, build_RFC(), train_ml_model, test_ml_model))
+    y_pred = model_ml.predict_proba(x_test)[:, 1]
+
+    # model_keras = build_keras_model()
+    # name = "Keras"
+    # print(K_fold_cross_validation(x_train, y_train, model_keras, train_keras_model, test_keras_model))
+    # y_pred = model_keras.predict(x_test).flatten()
+
+    submission = pd.DataFrame({'ID': pd.read_csv(f"data/data_predict_by_{name}.csv")['ID'].to_list(), 'Target': y_pred})
+    print(submission)
+    submission.to_csv('data/result_submission.csv', index=False)
 
 
 if __name__ == "__main__":

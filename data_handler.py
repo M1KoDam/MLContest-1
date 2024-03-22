@@ -10,6 +10,7 @@ class DataHandler:
         self.__train_features_count = None
 
     def handle_train_features(self, train_features: pd.DataFrame) -> np.ndarray:
+        train_features = train_features.sample(frac=1)
         train_features = self.__delete_useless_features_and_nans(self.__handle_pandas_dataframe(train_features))
         return self.__normalize_data(self.__handle_numpy_matrix(train_features.values))
 
