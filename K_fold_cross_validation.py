@@ -35,19 +35,19 @@ def main():
     # print(K_fold_cross_validation(x_train, y_train, build_RFC(), train_ml_model, test_ml_model))
     # print(K_fold_cross_validation(x_train, y_train, build_KNC(), train_ml_model, test_ml_model))
 
-    model_ml = build_RFC()
-    name = "RFC"
-    print(K_fold_cross_validation(x_train, y_train, build_RFC(), train_ml_model, test_ml_model))
-    y_pred = model_ml.predict_proba(x_test)[:, 1]
+    # model_ml = build_RFC()
+    # name = "RFC"
+    # print(K_fold_cross_validation(x_train, y_train, model_ml, train_ml_model, test_ml_model))
+    # y_pred = model_ml.predict_proba(x_test)[:, 1]
 
-    # model_keras = build_keras_model()
-    # name = "Keras"
-    # print(K_fold_cross_validation(x_train, y_train, model_keras, train_keras_model, test_keras_model))
-    # y_pred = model_keras.predict(x_test).flatten()
+    model_keras = build_keras_model()
+    name = "Keras"
+    print(K_fold_cross_validation(x_train, y_train, model_keras, train_keras_model, test_keras_model))
+    y_pred = model_keras.predict(x_test).flatten()
 
-    submission = pd.DataFrame({'ID': pd.read_csv(f"data/data_predict_by_{name}.csv")['ID'].to_list(), 'Target': y_pred})
+    submission = pd.DataFrame({'ID': pd.read_csv(f"data/data_predict.csv")['ID'].to_list(), 'Target': y_pred})
     print(submission)
-    submission.to_csv('data/result_submission.csv', index=False)
+    submission.to_csv(f"data/data_predict_by_{name}.csv", index=False)
 
 
 if __name__ == "__main__":
