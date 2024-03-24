@@ -129,9 +129,9 @@ def handle_labels(labels: np.ndarray) -> np.ndarray:
 def get_data():
     dh = DataHandler(
         handle_pandas=False,
-        normalize=True,  # Жизненно важно для нейросетей
+        normalize=False,  # Жизненно важно для нейросетей
         stabilize=False,
-        use_most_profitable_features=True
+        use_most_profitable_features=False
     )
 
     # Достаём из csv

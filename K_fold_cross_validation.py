@@ -1,7 +1,8 @@
 import numpy as np
 from data_handler import get_data
 from models.model_keras import build_keras_model, train_keras_model, test_keras_model
-from models.model_ml import build_RFC, train_ml_model, test_ml_model, build_KNC, build_cat_boost
+from models.model_ml import build_RFC, fit_ml_model, predict_ml_model, build_KNC
+from models.model_cat_boost import build_cat_boost, fit_cat_boost, predict_cat_boost
 import pandas as pd
 
 
@@ -38,13 +39,22 @@ def main():
     print(x_train.shape)
     print(len(y_train[y_train == 1]))
 
+    # name = "RFC"
+    # roc_auc_score = K_fold_cross_validation(x_train, y_train, build_RFC, train_ml_model, test_ml_model)
+    # print("Result ROC AUC:", roc_auc_score)
+    # print("Start training:")
+    # print(x_test.shape)
+    # model_ml = build_cat_boost()
+    # model_ml.fit(x_train, y_train)
+    # y_pred = model_ml.predict_proba(x_test)[:, 1]
+
     name = "CAT"
-    roc_auc_score = K_fold_cross_validation(x_train, y_train, build_cat_boost, train_ml_model, test_ml_model)
+    roc_auc_score = K_fold_cross_validation(x_train, y_train, build_cat_boost, fit_cat_boost, predict_cat_boost)
     print("Result ROC AUC:", roc_auc_score)
     print("Start training:")
     print(x_test.shape)
     model_ml = build_cat_boost()
-    model_ml.fit(x_train, y_train)
+    model_ml.fit(x_train, y_train, verbose=False)
     y_pred = model_ml.predict_proba(x_test)[:, 1]
 
     # name = "Keras"
